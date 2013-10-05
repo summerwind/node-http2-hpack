@@ -5,21 +5,21 @@ var ctx2 = hpac.createRequestContext();
 
 var buffers = [];
 var headers = [
-	{
-		':path':       '/my-example/index.html',
-		'user-agent':  'my-user-agent',
-		'mynewheader': 'first'
-	},
-	{
-		':path':       '/my-example/resource/script.js',
-		'user-agent':  'my-user-agent',
-		'mynewheader': 'second'
-	},
-	{
-		':path':       '/my-example/resource/script.js',
-		'user-agent':  'my-user-agent',
-		'mynewheader': 'third'
-	}
+  {
+    ':path':       '/my-example/index.html',
+    'user-agent':  'my-user-agent',
+    'mynewheader': 'first'
+  },
+  {
+    ':path':       '/my-example/resource/script.js',
+    'user-agent':  'my-user-agent',
+    'mynewheader': 'second'
+  },
+  {
+    ':path':       '/my-example/resource/script.js',
+    'user-agent':  'my-user-agent',
+    'mynewheader': 'third'
+  }
 ];
 
 buffers.push(ctx1.compress(headers[0]));
