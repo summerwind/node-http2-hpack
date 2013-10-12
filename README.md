@@ -1,4 +1,4 @@
-node-http2-hpac
-===============
+node-http2-hpack
+================
 
-An experimental implementation of HPAC
+An experimental implementation of HPACK

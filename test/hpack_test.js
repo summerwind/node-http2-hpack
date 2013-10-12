@@ -1,10 +1,10 @@
 var expect = require('expect.js');
-var hpac   = require('../lib/hpac');
+var hpack   = require('../lib/hpack');
 
-describe('HPAC', function(){
+describe('HPACK', function(){
   context('Low-Level Representation', function(){
     context('Integer Representation', function(){
-      var ctx = hpac.createRequestContext();
+      var ctx = hpack.createRequestContext();
 
       it('should encode 10 using a 5-bit prefix', function(){
         var buffer = ctx._encodeInteger(10, 5);
@@ -75,7 +75,7 @@ describe('HPAC', function(){
     var ctx;
 
     beforeEach(function(){
-      ctx = hpac.createRequestContext();
+      ctx = hpack.createRequestContext();
     });
 
     it('should encode header', function(){
@@ -100,7 +100,7 @@ describe('HPAC', function(){
     var ctx;
 
     beforeEach(function(){
-      ctx = hpac.createRequestContext();
+      ctx = hpack.createRequestContext();
     });
 
     context('Literal Header without Indexing', function(){
@@ -254,7 +254,7 @@ describe('HPAC', function(){
 
   context('Header Processsing', function(){
     context('Header Compression', function(){
-      var ctx = hpac.createRequestContext();
+      var ctx = hpack.createRequestContext();
 
       it('should encode first header', function(){
         var headers = {
@@ -329,7 +329,7 @@ describe('HPAC', function(){
     });
 
     context('Header Compression with eviction', function(){
-      var ctx = hpac.createRequestContext(1400);
+      var ctx = hpack.createRequestContext(1400);
 
       it('should encode first header', function(){
         var headers = {
@@ -404,7 +404,7 @@ describe('HPAC', function(){
     });
 
     context('Header Decompression', function(){
-      var ctx = hpac.createRequestContext();
+      var ctx = hpack.createRequestContext();
 
       it('should decode first header', function(){
         var headers = {
@@ -479,7 +479,7 @@ describe('HPAC', function(){
     });
 
     context('Header Decompression with eviction', function(){
-      var ctx = hpac.createRequestContext(1400);
+      var ctx = hpack.createRequestContext(1400);
 
       it('should decode first header', function(){
         var headers = {
@@ -556,7 +556,7 @@ describe('HPAC', function(){
     context('Header Table Management', function(){
       it('should clear all entries when handle large header', function(){
         var limit = 4097;
-        var ctx = hpac.createRequestContext(limit);
+        var ctx = hpack.createRequestContext(limit);
 
         var large_value = '';
         for (var i=0; i<=limit; i++) {
@@ -578,7 +578,7 @@ describe('HPAC', function(){
 
       it('should prepend entry when entry to be replaced is removed', function(){
         var limit = 1218;
-        var ctx = hpac.createRequestContext(limit);
+        var ctx = hpack.createRequestContext(limit);
 
         var encoded_headers = new Buffer([
           0x04, 0x03, 0x46, 0x77, 0x77, 0x77, 0x2e, 0x74,
@@ -600,7 +600,7 @@ describe('HPAC', function(){
     });
 
     context('Error Handling', function(){
-      var ctx = hpac.createRequestContext();
+      var ctx = hpack.createRequestContext();
 
       it('should handle invalid indexed name', function(){
         var encoded_headers = new Buffer([

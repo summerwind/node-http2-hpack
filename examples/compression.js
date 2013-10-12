@@ -1,7 +1,7 @@
-var hpac = require('../lib/hpac');
+var hpack = require('../lib/hpack');
 
-var ctx1 = hpac.createRequestContext();
-var ctx2 = hpac.createRequestContext();
+var ctx1 = hpack.createRequestContext();
+var ctx2 = hpack.createRequestContext();
 
 var buffers = [];
 var headers = [

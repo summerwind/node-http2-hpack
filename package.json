@@ -1,14 +1,14 @@
 {
-  "name": "http2-hpac",
+  "name": "http2-hpack",
   "version": "0.0.1",
-  "description": "An experimental implementation of HPAC",
+  "description": "An experimental implementation of HPACK",
   "main": "lib/hpac.js",
   "scripts": {
     "test": "./node_modules/.bin/mocha -R spec"
   },
   "keywords": [
     "http2",
-    "hpac"
+    "hpack"
   ],
   "author": "Moto Ishizawa",
   "license": "MIT",
