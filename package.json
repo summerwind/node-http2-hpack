@@ -2,7 +2,7 @@
   "name": "http2-hpack",
   "version": "0.0.1",
   "description": "An experimental implementation of HPACK",
-  "main": "lib/hpac.js",
+  "main": "lib/hpack.js",
   "scripts": {
     "test": "./node_modules/.bin/mocha -R spec"
   },
