@@ -3,7 +3,7 @@ var hpack = require('../lib/hpack');
 var ctx1 = hpack.createRequestContext();
 var ctx2 = hpack.createRequestContext();
 
-var buffers = [];
+var buffer;
 var headers = [
   {
     ':path':       '/my-example/index.html',
@@ -22,15 +22,14 @@ var headers = [
   }
 ];
 
-buffers.push(ctx1.compress(headers[0]));
-buffers.push(ctx1.compress(headers[1]));
-buffers.push(ctx1.compress(headers[2]));
+buffer = ctx1.compress(headers[0]);
+console.log('Compressed:',   buffer);
+console.log('Decompressed:', ctx2.decompress(buffer), "\n");
 
-console.log('Compressed:',   buffers[0]);
-console.log('Decompressed:', ctx2.decompress(buffers[0]), "\n");
+buffer = ctx1.compress(headers[1]);
+console.log('Compressed:',   buffer);
+console.log('Decompressed:', ctx2.decompress(buffer), "\n");
 
-console.log('Compressed:',   buffers[1]);
-console.log('Decompressed:', ctx2.decompress(buffers[1]), "\n");
-
-console.log('Compressed:',   buffers[2]);
-console.log('Decompressed:', ctx2.decompress(buffers[2]));
+buffer = ctx1.compress(headers[2]);
+console.log('Compressed:',   buffer);
+console.log('Decompressed:', ctx2.decompress(buffer));
