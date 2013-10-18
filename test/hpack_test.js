@@ -21,17 +21,17 @@ describe('HPACK', function(){
         expect(num).to.be(10);
       });
 
-      it('should encode 10 using a 0-bit prefix', function(){
-        var buffer = ctx._encodeInteger(10, 5);
+      it('should encode 10 using a 8-bit prefix', function(){
+        var buffer = ctx._encodeInteger(10, 8);
 
         expect(buffer.length).to.be(1);
         expect(buffer[0]).to.be(0x0a);
       });
 
-      it('should decode 10 using a 0-bit prefix', function(){
+      it('should decode 10 using a 8-bit prefix', function(){
         var buffer = new Buffer([0x0a]);
         buffer._cursor = 0;
-        var num = ctx._decodeInteger(buffer, 5);
+        var num = ctx._decodeInteger(buffer, 8);
 
         expect(num).to.be(10);
       });
@@ -53,18 +53,19 @@ describe('HPACK', function(){
         expect(num).to.be(1337);
       });
 
-      it('should encode 1337 using a 0-bit prefix', function(){
-        var buffer = ctx._encodeInteger(1337, 0);
+      it('should encode 1337 using a 8-bit prefix', function(){
+        var buffer = ctx._encodeInteger(1337, 8);
 
-        expect(buffer.length).to.be(2);
-        expect(buffer[0]).to.be(0xb9);
-        expect(buffer[1]).to.be(0x0a);
+        expect(buffer.length).to.be(3);
+        expect(buffer[0]).to.be(0xff);
+        expect(buffer[1]).to.be(0xba);
+        expect(buffer[2]).to.be(0x08);
       });
 
-      it('should decode 1337 using a 0-bit prefix', function(){
-        var buffer = new Buffer([0xb9, 0x0a]);
+      it('should decode 1337 using a 8-bit prefix', function(){
+        var buffer = new Buffer([0xff, 0xba, 0x08]);
         buffer._cursor = 0;
-        var num = ctx._decodeInteger(buffer, 0);
+        var num = ctx._decodeInteger(buffer, 8);
 
         expect(num).to.be(1337);
       });
@@ -572,8 +573,8 @@ describe('HPACK', function(){
         expect(ctx._header_table.size, 0);
         expect(ctx._header_table._entries.length, 0);
         expect(buffer[0]).to.be(0x44);
-        expect(buffer[1]).to.be(0x82);
-        expect(buffer[2]).to.be(0x20);
+        expect(buffer[1]).to.be(0xff);
+        expect(buffer[2]).to.be(0x83);
       });
 
       it('should prepend entry when entry to be replaced is removed', function(){
