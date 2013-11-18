@@ -6,29 +6,36 @@ var ctx2 = hpack.createRequestContext();
 var buffer;
 var headers = [
   {
-    ':path':       '/my-example/index.html',
-    'user-agent':  'my-user-agent',
-    'mynewheader': 'first'
+    ':method':    'GET',
+    ':scheme':    'http',
+    ':path':      '/',
+    ':authority': 'www.foo.com'
   },
   {
-    ':path':       '/my-example/resource/script.js',
-    'user-agent':  'my-user-agent',
-    'mynewheader': 'second'
+    ':method':       'GET',
+    ':scheme':       'https',
+    ':path':         '/',
+    ':authority':    'www.bar.com',
+    'cache-control': 'no-cache'
   },
   {
-    ':path':       '/my-example/resource/script.js',
-    'user-agent':  'my-user-agent',
-    'mynewheader': 'third'
+    ':method':    'GET',
+    ':scheme':    'https',
+    ':path':      '/custom-path.css',
+    ':authority': 'www.bar.com',
+    'custom-key': 'custom-value'
   }
 ];
 
 buffer = ctx1.compress(headers[0]);
 console.log('Compressed:',   buffer);
-console.log('Decompressed:', ctx2.decompress(buffer), "\n");
+console.log('Decompressed:', ctx2.decompress(buffer));
+console.log('----------');
 
 buffer = ctx1.compress(headers[1]);
 console.log('Compressed:',   buffer);
-console.log('Decompressed:', ctx2.decompress(buffer), "\n");
+console.log('Decompressed:', ctx2.decompress(buffer));
+console.log('----------');
 
 buffer = ctx1.compress(headers[2]);
 console.log('Compressed:',   buffer);
