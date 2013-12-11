@@ -1,7 +1,7 @@
 var hpack = require('../lib/hpack');
 
-var ctx1 = hpack.createRequestContext();
-var ctx2 = hpack.createRequestContext();
+var ctx1 = hpack.createRequestContext({ huffman: false });
+var ctx2 = hpack.createRequestContext({ huffman: false });
 
 var buffer;
 var headers = [
@@ -9,20 +9,20 @@ var headers = [
     ':method':    'GET',
     ':scheme':    'http',
     ':path':      '/',
-    ':authority': 'www.foo.com'
+    ':authority': 'www.example.com'
   },
   {
     ':method':       'GET',
-    ':scheme':       'https',
+    ':scheme':       'http',
     ':path':         '/',
-    ':authority':    'www.bar.com',
+    ':authority':    'www.example.com',
     'cache-control': 'no-cache'
   },
   {
     ':method':    'GET',
     ':scheme':    'https',
-    ':path':      '/custom-path.css',
-    ':authority': 'www.bar.com',
+    ':path':      '/index.html',
+    ':authority': 'www.example.com',
     'custom-key': 'custom-value'
   }
 ];
@@ -40,3 +40,4 @@ console.log('----------');
 buffer = ctx1.compress(headers[2]);
 console.log('Compressed:',   buffer);
 console.log('Decompressed:', ctx2.decompress(buffer));
+
