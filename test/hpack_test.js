@@ -80,7 +80,7 @@ describe('HPACK', function(){
     });
 
     it('should reset reference set', function(){
-      var cmd = { type: 0, index: 0 };
+      var cmd = { type: 0 };
       var buffer = ctx._encodeHeader(cmd);
 
       expect(buffer.length).to.be(1);
