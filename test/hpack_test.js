@@ -804,6 +804,26 @@ describe('HPACK', function(){
       expect(ctx._header_table.length).to.eql(0);
       expect(ctx._header_table.size).to.eql(0);
     });
+
+    it('should emit evicted entry while decoding', function(){
+      var ctx1 = hpack.createRequestContext({ huffman: false });
+      var ctx2 = hpack.createRequestContext({ huffman: false });
+
+      var large_value = '';
+      for(i = 0; i < 4096 - 32 - 1; ++i) {
+        large_value += '1';
+      }
+
+      var headers = [
+        { 'x': large_value },
+        { 'x': large_value, ':method': 'GET' }
+      ];
+
+      ctx2.decompress(ctx1.compress(headers[0]));
+      var decoded_header = ctx2.decompress(ctx1.compress(headers[1]));
+
+      expect(decoded_header['x']).to.eql(large_value);
+    });
   });
 
   context('Error Handling', function(){
