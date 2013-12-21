@@ -805,7 +805,7 @@ describe('HPACK', function(){
       expect(ctx._header_table.size).to.eql(0);
     });
 
-    it('should emit evicted entry while decoding', function(){
+    it('should emit evicted entry while encoding', function(){
       var ctx1 = hpack.createRequestContext({ huffman: false });
       var ctx2 = hpack.createRequestContext({ huffman: false });
 
@@ -822,8 +822,8 @@ describe('HPACK', function(){
       ctx2.decompress(ctx1.compress(headers[0]));
       var decoded_headers = ctx2.decompress(ctx1.compress(headers[1]));
 
-      expect(decoded_headers[1][0]).to.be('x');
-      expect(decoded_headers[1][1]).to.be(large_value);
+      expect(decoded_headers[0][0]).to.be('x');
+      expect(decoded_headers[0][1]).to.be(large_value);
     });
   });
 
