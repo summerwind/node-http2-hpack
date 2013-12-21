@@ -206,12 +206,12 @@ describe('HPACK', function(){
       var ctx = hpack.createRequestContext({ huffman: false });
 
       it('should encode first header', function(){
-        var headers = {
-          ':method': 'GET',
-          ':scheme': 'http',
-          ':path': '/',
-          ':authority': 'www.example.com'
-        };
+        var headers = [
+          [ ':method', 'GET' ],
+          [ ':scheme', 'http' ],
+          [ ':path', '/' ],
+          [ ':authority', 'www.example.com' ]
+        ];
 
         var encoded_headers = new Buffer([
           0x82, 0x87, 0x86, 0x04, 0x0f, 0x77, 0x77, 0x77,
@@ -226,13 +226,13 @@ describe('HPACK', function(){
       });
 
       it('should encode second header', function(){
-        var headers = {
-          ':method': 'GET',
-          ':scheme': 'http',
-          ':path': '/',
-          ':authority': 'www.example.com',
-          'cache-control': 'no-cache'
-        };
+        var headers = [
+          [ ':method', 'GET' ],
+          [ ':scheme', 'http' ],
+          [ ':path', '/' ],
+          [ ':authority', 'www.example.com' ],
+          [ 'cache-control', 'no-cache' ]
+        ];
 
         var encoded_headers = new Buffer([
           0x1b, 0x08, 0x6e, 0x6f, 0x2d, 0x63, 0x61, 0x63,
@@ -246,13 +246,13 @@ describe('HPACK', function(){
       });
 
       it('should encode third header', function(){
-        var headers = {
-          ':method': 'GET',
-          ':scheme': 'https',
-          ':path': '/index.html',
-          ':authority': 'www.example.com',
-          'custom-key': 'custom-value'
-        };
+        var headers = [
+          [ ':method', 'GET' ],
+          [ ':scheme', 'https' ],
+          [ ':path', '/index.html' ],
+          [ ':authority', 'www.example.com' ],
+          [ 'custom-key', 'custom-value' ]
+        ];
 
         var encoded_headers = new Buffer([
           0x8c, 0x8b, 0x00, 0x0a, 0x63, 0x75, 0x73, 0x74,
@@ -272,12 +272,12 @@ describe('HPACK', function(){
       var ctx = hpack.createRequestContext({ huffman: false });
 
       it('should decode first header', function(){
-        var headers = {
-          ':method': 'GET',
-          ':scheme': 'http',
-          ':path': '/',
-          ':authority': 'www.example.com'
-        };
+        var headers = [
+          [ ':method', 'GET' ],
+          [ ':scheme', 'http' ],
+          [ ':path', '/' ],
+          [ ':authority', 'www.example.com' ]
+        ];
 
         var encoded_headers = new Buffer([
           0x82, 0x87, 0x86, 0x04, 0x0f, 0x77, 0x77, 0x77,
@@ -292,13 +292,13 @@ describe('HPACK', function(){
       });
 
       it('should decode second header', function(){
-        var headers = {
-          ':method': 'GET',
-          ':scheme': 'http',
-          ':path': '/',
-          ':authority': 'www.example.com',
-          'cache-control': 'no-cache'
-        };
+        var headers = [
+          [ 'cache-control', 'no-cache' ],
+          [ ':authority', 'www.example.com' ],
+          [ ':path', '/' ],
+          [ ':scheme', 'http' ],
+          [ ':method', 'GET' ]
+        ];
 
         var encoded_headers = new Buffer([
           0x1b, 0x08, 0x6e, 0x6f, 0x2d, 0x63, 0x61, 0x63,
@@ -312,13 +312,13 @@ describe('HPACK', function(){
       });
 
       it('should decode third header', function(){
-        var headers = {
-          ':method': 'GET',
-          ':scheme': 'https',
-          ':path': '/index.html',
-          ':authority': 'www.example.com',
-          'custom-key': 'custom-value'
-        };
+        var headers = [
+          [ ':scheme', 'https' ],
+          [ ':path', '/index.html' ],
+          [ 'custom-key', 'custom-value' ],
+          [ ':authority', 'www.example.com' ],
+          [ ':method', 'GET' ]
+        ];
 
         var encoded_headers = new Buffer([
           0x8c, 0x8b, 0x00, 0x0a, 0x63, 0x75, 0x73, 0x74,
@@ -338,12 +338,12 @@ describe('HPACK', function(){
       var ctx = hpack.createRequestContext();
 
       it('should encode first header', function(){
-        var headers = {
-          ':method': 'GET',
-          ':scheme': 'http',
-          ':path': '/',
-          ':authority': 'www.example.com'
-        };
+        var headers = [
+          [ ':method', 'GET' ],
+          [ ':scheme', 'http' ],
+          [ ':path', '/' ],
+          [ ':authority', 'www.example.com' ]
+        ];
 
         var encoded_headers = new Buffer([
           0x82, 0x87, 0x86, 0x04, 0x8b, 0xdb, 0x6d, 0x88,
@@ -357,13 +357,13 @@ describe('HPACK', function(){
       });
 
       it('should encode second header', function(){
-        var headers = {
-          ':method': 'GET',
-          ':scheme': 'http',
-          ':path': '/',
-          ':authority': 'www.example.com',
-          'cache-control': 'no-cache'
-        };
+        var headers = [
+          [ ':method', 'GET' ],
+          [ ':scheme', 'http' ],
+          [ ':path', '/' ],
+          [ ':authority', 'www.example.com' ],
+          [ 'cache-control', 'no-cache' ]
+        ];
 
         var encoded_headers = new Buffer([
           0x1b, 0x86, 0x63, 0x65, 0x4a, 0x13, 0x98, 0xff
@@ -376,13 +376,13 @@ describe('HPACK', function(){
       });
 
       it('should encode third header', function(){
-        var headers = {
-          ':method': 'GET',
-          ':scheme': 'https',
-          ':path': '/index.html',
-          ':authority': 'www.example.com',
-          'custom-key': 'custom-value'
-        };
+        var headers = [
+          [ ':method', 'GET' ],
+          [ ':scheme', 'https' ],
+          [ ':path', '/index.html' ],
+          [ ':authority', 'www.example.com' ],
+          [ 'custom-key', 'custom-value' ]
+        ];
 
         var encoded_headers = new Buffer([
           0x8c, 0x8b, 0x00, 0x88, 0x4e, 0xb0, 0x8b, 0x74,
@@ -402,12 +402,12 @@ describe('HPACK', function(){
       var ctx = hpack.createRequestContext();
 
       it('should decode first header', function(){
-        var headers = {
-          ':method': 'GET',
-          ':scheme': 'http',
-          ':path': '/',
-          ':authority': 'www.example.com'
-        };
+        var headers = [
+          [ ':method', 'GET' ],
+          [ ':scheme', 'http' ],
+          [ ':path', '/' ],
+          [ ':authority', 'www.example.com' ]
+        ];
 
         var encoded_headers = new Buffer([
           0x82, 0x87, 0x86, 0x04, 0x8b, 0xdb, 0x6d, 0x88,
@@ -421,13 +421,13 @@ describe('HPACK', function(){
       });
 
       it('should decode second header', function(){
-        var headers = {
-          ':method': 'GET',
-          ':scheme': 'http',
-          ':path': '/',
-          ':authority': 'www.example.com',
-          'cache-control': 'no-cache'
-        };
+        var headers = [
+          [ 'cache-control', 'no-cache' ],
+          [ ':authority', 'www.example.com' ],
+          [ ':path', '/' ],
+          [ ':scheme', 'http' ],
+          [ ':method', 'GET' ]
+        ];
 
         var encoded_headers = new Buffer([
           0x1b, 0x86, 0x63, 0x65, 0x4a, 0x13, 0x98, 0xff
@@ -440,13 +440,13 @@ describe('HPACK', function(){
       });
 
       it('should decode third header', function(){
-        var headers = {
-          ':method': 'GET',
-          ':scheme': 'https',
-          ':path': '/index.html',
-          ':authority': 'www.example.com',
-          'custom-key': 'custom-value'
-        };
+        var headers = [
+          [ ':scheme', 'https' ],
+          [ ':path', '/index.html' ],
+          [ 'custom-key', 'custom-value' ],
+          [ ':authority', 'www.example.com' ],
+          [ ':method', 'GET' ]
+        ];
 
         var encoded_headers = new Buffer([
           0x8c, 0x8b, 0x00, 0x88, 0x4e, 0xb0, 0x8b, 0x74,
@@ -466,12 +466,12 @@ describe('HPACK', function(){
       var ctx = hpack.createResponseContext({ huffman: false, limit: 256 });
 
       it('should encode first header', function(){
-        var headers = {
-          ':status': '302',
-          'cache-control': 'private',
-          'date': 'Mon, 21 Oct 2013 20:13:21 GMT',
-          'location': 'https://www.example.com'
-        };
+        var headers = [
+          [ ':status', '302' ],
+          [ 'cache-control', 'private' ],
+          [ 'date', 'Mon, 21 Oct 2013 20:13:21 GMT' ],
+          [ 'location', 'https://www.example.com' ]
+        ];
 
         var encoded_headers = new Buffer([
           0x08, 0x03, 0x33, 0x30, 0x32, 0x18, 0x07, 0x70,
@@ -492,12 +492,12 @@ describe('HPACK', function(){
       });
 
       it('should encode second header', function(){
-        var headers = {
-          ':status': '200',
-          'cache-control': 'private',
-          'date': 'Mon, 21 Oct 2013 20:13:21 GMT',
-          'location': 'https://www.example.com'
-        };
+        var headers = [
+          [ ':status', '200' ],
+          [ 'cache-control', 'private' ],
+          [ 'date', 'Mon, 21 Oct 2013 20:13:21 GMT' ],
+          [ 'location', 'https://www.example.com' ]
+        ];
 
         var encoded_headers = new Buffer([
           0x8c
@@ -510,14 +510,14 @@ describe('HPACK', function(){
       });
 
       it('should encode third header', function(){
-        var headers = {
-          ':status': '200',
-          'cache-control': 'private',
-          'date': 'Mon, 21 Oct 2013 20:13:22 GMT',
-          'location': 'https://www.example.com',
-          'content-encoding': 'gzip',
-          'set-cookie': 'foo=ASDJKHQKBZXOQWEOPIUAXQWEOIU; max-age=3600; version=1'
-        };
+        var headers = [
+          [ ':status', '200' ],
+          [ 'cache-control', 'private' ],
+          [ 'date', 'Mon, 21 Oct 2013 20:13:22 GMT' ],
+          [ 'location', 'https://www.example.com' ],
+          [ 'content-encoding', 'gzip' ],
+          [ 'set-cookie', 'foo=ASDJKHQKBZXOQWEOPIUAXQWEOIU; max-age=3600; version=1' ]
+        ];
 
         var encoded_headers = new Buffer([
           0x83, 0x84, 0x84, 0x03, 0x1d, 0x4d, 0x6f, 0x6e,
@@ -546,12 +546,12 @@ describe('HPACK', function(){
       var ctx = hpack.createResponseContext({ huffman: false, limit: 256 });
 
       it('should decode first header', function(){
-        var headers = {
-          ':status': '302',
-          'cache-control': 'private',
-          'date': 'Mon, 21 Oct 2013 20:13:21 GMT',
-          'location': 'https://www.example.com'
-        };
+        var headers = [
+          [ ':status', '302' ],
+          [ 'cache-control', 'private' ],
+          [ 'date', 'Mon, 21 Oct 2013 20:13:21 GMT' ],
+          [ 'location', 'https://www.example.com' ]
+        ];
 
         var encoded_headers = new Buffer([
           0x08, 0x03, 0x33, 0x30, 0x32, 0x18, 0x07, 0x70,
@@ -572,12 +572,12 @@ describe('HPACK', function(){
       });
 
       it('should encode second header', function(){
-        var headers = {
-          ':status': '200',
-          'cache-control': 'private',
-          'date': 'Mon, 21 Oct 2013 20:13:21 GMT',
-          'location': 'https://www.example.com'
-        };
+        var headers = [
+          [ ':status', '200' ],
+          [ 'location', 'https://www.example.com' ],
+          [ 'date', 'Mon, 21 Oct 2013 20:13:21 GMT' ],
+          [ 'cache-control', 'private' ]
+        ];
 
         var encoded_headers = new Buffer([
           0x84, 0x8c
@@ -590,14 +590,14 @@ describe('HPACK', function(){
       });
 
       it('should encode third header', function(){
-        var headers = {
-          ':status': '200',
-          'cache-control': 'private',
-          'date': 'Mon, 21 Oct 2013 20:13:22 GMT',
-          'location': 'https://www.example.com',
-          'content-encoding': 'gzip',
-          'set-cookie': 'foo=ASDJKHQKBZXOQWEOPIUAXQWEOIU; max-age=3600; version=1'
-        };
+        var headers = [
+          [ 'cache-control', 'private' ],
+          [ 'date', 'Mon, 21 Oct 2013 20:13:22 GMT' ],
+          [ 'content-encoding', 'gzip' ],
+          [ 'location', 'https://www.example.com' ],
+          [ ':status', '200' ],
+          [ 'set-cookie', 'foo=ASDJKHQKBZXOQWEOPIUAXQWEOIU; max-age=3600; version=1' ]
+        ];
 
         var encoded_headers = new Buffer([
           0x83, 0x84, 0x84, 0x03, 0x1d, 0x4d, 0x6f, 0x6e,
@@ -626,12 +626,12 @@ describe('HPACK', function(){
       var ctx = hpack.createResponseContext({ limit: 256 });
 
       it('should encode first header', function(){
-        var headers = {
-          ':status': '302',
-          'cache-control': 'private',
-          'date': 'Mon, 21 Oct 2013 20:13:21 GMT',
-          'location': 'https://www.example.com'
-        };
+        var headers = [
+          [ ':status', '302' ],
+          [ 'cache-control', 'private' ],
+          [ 'date', 'Mon, 21 Oct 2013 20:13:21 GMT' ],
+          [ 'location', 'https://www.example.com' ]
+        ];
 
         var encoded_headers = new Buffer([
           0x08, 0x82, 0x40, 0x9f, 0x18, 0x86, 0xc3, 0x1b,
@@ -650,12 +650,12 @@ describe('HPACK', function(){
       });
 
       it('should encode second header', function(){
-        var headers = {
-          ':status': '200',
-          'cache-control': 'private',
-          'date': 'Mon, 21 Oct 2013 20:13:21 GMT',
-          'location': 'https://www.example.com'
-        };
+        var headers = [
+          [ ':status', '200' ],
+          [ 'cache-control', 'private' ],
+          [ 'date', 'Mon, 21 Oct 2013 20:13:21 GMT' ],
+          [ 'location', 'https://www.example.com' ]
+        ];
 
         var encoded_headers = new Buffer([
           0x8c
@@ -668,14 +668,14 @@ describe('HPACK', function(){
       });
 
       it('should encode third header', function(){
-        var headers = {
-          ':status': '200',
-          'cache-control': 'private',
-          'date': 'Mon, 21 Oct 2013 20:13:22 GMT',
-          'location': 'https://www.example.com',
-          'content-encoding': 'gzip',
-          'set-cookie': 'foo=ASDJKHQKBZXOQWEOPIUAXQWEOIU; max-age=3600; version=1'
-        };
+        var headers = [
+          [ ':status', '200' ],
+          [ 'cache-control', 'private' ],
+          [ 'date', 'Mon, 21 Oct 2013 20:13:22 GMT' ],
+          [ 'location', 'https://www.example.com' ],
+          [ 'content-encoding', 'gzip' ],
+          [ 'set-cookie', 'foo=ASDJKHQKBZXOQWEOPIUAXQWEOIU; max-age=3600; version=1' ]
+        ];
 
         var encoded_headers = new Buffer([
           0x83, 0x84, 0x84, 0x03, 0x92, 0xa2, 0xfb, 0xa2,
@@ -702,12 +702,12 @@ describe('HPACK', function(){
       var ctx = hpack.createResponseContext({ limit: 256 });
 
       it('should decode first header', function(){
-        var headers = {
-          ':status': '302',
-          'cache-control': 'private',
-          'date': 'Mon, 21 Oct 2013 20:13:21 GMT',
-          'location': 'https://www.example.com'
-        };
+        var headers = [
+          [ ':status', '302' ],
+          [ 'cache-control', 'private' ],
+          [ 'date', 'Mon, 21 Oct 2013 20:13:21 GMT' ],
+          [ 'location', 'https://www.example.com' ]
+        ];
 
         var encoded_headers = new Buffer([
           0x08, 0x82, 0x40, 0x9f, 0x18, 0x86, 0xc3, 0x1b,
@@ -726,12 +726,12 @@ describe('HPACK', function(){
       });
 
       it('should encode second header', function(){
-        var headers = {
-          ':status': '200',
-          'cache-control': 'private',
-          'date': 'Mon, 21 Oct 2013 20:13:21 GMT',
-          'location': 'https://www.example.com'
-        };
+        var headers = [
+          [ ':status', '200' ],
+          [ 'location', 'https://www.example.com' ],
+          [ 'date', 'Mon, 21 Oct 2013 20:13:21 GMT' ],
+          [ 'cache-control', 'private' ]
+        ];
 
         var encoded_headers = new Buffer([
           0x84, 0x8c
@@ -744,14 +744,14 @@ describe('HPACK', function(){
       });
 
       it('should encode third header', function(){
-        var headers = {
-          ':status': '200',
-          'cache-control': 'private',
-          'date': 'Mon, 21 Oct 2013 20:13:22 GMT',
-          'location': 'https://www.example.com',
-          'content-encoding': 'gzip',
-          'set-cookie': 'foo=ASDJKHQKBZXOQWEOPIUAXQWEOIU; max-age=3600; version=1'
-        };
+        var headers = [
+          [ 'cache-control', 'private' ],
+          [ 'date', 'Mon, 21 Oct 2013 20:13:22 GMT' ],
+          [ 'content-encoding', 'gzip' ],
+          [ 'location', 'https://www.example.com' ],
+          [ ':status', '200' ],
+          [ 'set-cookie', 'foo=ASDJKHQKBZXOQWEOPIUAXQWEOIU; max-age=3600; version=1' ]
+        ];
 
         var encoded_headers = new Buffer([
           0x83, 0x84, 0x84, 0x03, 0x92, 0xa2, 0xfb, 0xa2,
@@ -780,12 +780,12 @@ describe('HPACK', function(){
       var limit = 255;
       var ctx = hpack.createRequestContext({ limit: limit });
 
-      var first_header = {
-        ':method': 'GET',
-        ':scheme': 'http',
-        ':path': '/',
-        ':authority': 'www.example.com'
-      };
+      var first_header = [
+        [ ':method', 'GET' ],
+        [ ':scheme', 'http' ],
+        [ ':path', '/' ],
+        [ ':authority', 'www.example.com' ]
+      ];
 
       ctx.compress(first_header);
       expect(ctx._header_table.length).to.eql(4);
@@ -796,9 +796,9 @@ describe('HPACK', function(){
         large_value += 'a';
       }
 
-      var second_headers = {
-        ':path': large_value
-      };
+      var second_headers = [
+        [ ':path', large_value ]
+      ];
 
       ctx.compress(second_headers);
       expect(ctx._header_table.length).to.eql(0);
@@ -815,14 +815,15 @@ describe('HPACK', function(){
       }
 
       var headers = [
-        { 'x': large_value },
-        { 'x': large_value, ':method': 'GET' }
+        [ [ 'x', large_value ] ],
+        [ [ 'x', large_value ], [ ':method', 'GET' ] ]
       ];
 
       ctx2.decompress(ctx1.compress(headers[0]));
-      var decoded_header = ctx2.decompress(ctx1.compress(headers[1]));
+      var decoded_headers = ctx2.decompress(ctx1.compress(headers[1]));
 
-      expect(decoded_header['x']).to.eql(large_value);
+      expect(decoded_headers[1][0]).to.be('x');
+      expect(decoded_headers[1][1]).to.be(large_value);
     });
   });
 

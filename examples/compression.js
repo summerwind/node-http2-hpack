@@ -5,26 +5,26 @@ var ctx2 = hpack.createRequestContext({ huffman: false });
 
 var buffer;
 var headers = [
-  {
-    ':method':    'GET',
-    ':scheme':    'http',
-    ':path':      '/',
-    ':authority': 'www.example.com'
-  },
-  {
-    ':method':       'GET',
-    ':scheme':       'http',
-    ':path':         '/',
-    ':authority':    'www.example.com',
-    'cache-control': 'no-cache'
-  },
-  {
-    ':method':    'GET',
-    ':scheme':    'https',
-    ':path':      '/index.html',
-    ':authority': 'www.example.com',
-    'custom-key': 'custom-value'
-  }
+  [
+    [ ':method', 'GET' ],
+    [ ':scheme', 'http' ],
+    [ ':path', '/' ],
+    [ ':authority', 'www.example.com' ]
+  ],
+  [
+    [ ':method', 'GET' ],
+    [ ':scheme', 'http' ],
+    [ ':path', '/' ],
+    [ ':authority', 'www.example.com' ],
+    [ 'cache-control', 'no-cache' ]
+  ],
+  [
+    [ ':method', 'GET' ],
+    [ ':scheme', 'https' ],
+    [ ':path', '/index.html' ],
+    [ ':authority', 'www.example.com' ],
+    [ 'custom-key', 'custom-value' ]
+  ]
 ];
 
 buffer = ctx1.compress(headers[0]);
