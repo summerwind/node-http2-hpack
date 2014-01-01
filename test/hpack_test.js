@@ -463,7 +463,7 @@ describe('HPACK', function(){
     });
 
     context('Response examples compression', function(){
-      var ctx = hpack.createResponseContext({ huffman: false, limit: 256 });
+      var ctx = hpack.createResponseContext({ huffman: false, size: 256 });
 
       it('should encode first header', function(){
         var headers = [
@@ -543,7 +543,7 @@ describe('HPACK', function(){
     });
 
     context('Response examples decompression', function(){
-      var ctx = hpack.createResponseContext({ huffman: false, limit: 256 });
+      var ctx = hpack.createResponseContext({ huffman: false, size: 256 });
 
       it('should decode first header', function(){
         var headers = [
@@ -623,7 +623,7 @@ describe('HPACK', function(){
     });
 
     context('Response examples with Huffman compression', function(){
-      var ctx = hpack.createResponseContext({ limit: 256 });
+      var ctx = hpack.createResponseContext({ size: 256 });
 
       it('should encode first header', function(){
         var headers = [
@@ -699,7 +699,7 @@ describe('HPACK', function(){
     });
 
     context('Response examples with Huffman decompression', function(){
-      var ctx = hpack.createResponseContext({ limit: 256 });
+      var ctx = hpack.createResponseContext({ size: 256 });
 
       it('should decode first header', function(){
         var headers = [
@@ -777,8 +777,8 @@ describe('HPACK', function(){
 
   context('Header Table Management', function(){
     it('should clear all entries when process large header value', function(){
-      var limit = 255;
-      var ctx = hpack.createRequestContext({ limit: limit });
+      var size = 255;
+      var ctx = hpack.createRequestContext({ size: size });
 
       var first_header = [
         [ ':method', 'GET' ],
@@ -792,7 +792,7 @@ describe('HPACK', function(){
       expect(ctx._header_table.size).to.eql(180);
 
       var large_value = '';
-      for (var i=0; i<=limit; i++) {
+      for (var i=0; i<=size; i++) {
         large_value += 'a';
       }
 
