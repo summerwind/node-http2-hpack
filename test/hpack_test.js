@@ -4,7 +4,7 @@ var hpack = require('../lib/hpack');
 describe('HPACK', function(){
   context('Low-Level Representation', function(){
     context('Integer Representation', function(){
-      var ctx = hpack.createRequestContext({ huffman: false });
+      var ctx = hpack.createContext({ huffman: false });
 
       it('should encode 10 using a 5-bit prefix', function(){
         var buffer = ctx._encodeInteger(10, 5);
@@ -59,7 +59,7 @@ describe('HPACK', function(){
     var ctx;
 
     beforeEach(function(){
-      ctx = hpack.createRequestContext({ huffman: false });
+      ctx = hpack.createContext({ huffman: false });
     });
 
     it('should encode header', function(){
@@ -80,11 +80,32 @@ describe('HPACK', function(){
     });
 
     it('should reset reference set', function(){
-      var cmd = { type: 0 };
+      var cmd = { type: 0, update: { type: 0 } };
       var buffer = ctx._encodeHeader(cmd);
 
-      expect(buffer.length).to.be(1);
+      expect(buffer.length).to.be(2);
       expect(buffer[0]).to.be(0x80);
+      expect(buffer[1]).to.be(0x80);
+      expect(ctx._header_table.length).to.eql(0);
+      expect(ctx._header_table.size).to.eql(0);
+
+      buffer._cursor = 0;
+      var decoded_cmd = ctx._decodeHeader(buffer);
+
+      expect(decoded_cmd).to.eql(cmd);
+      expect(ctx._header_table.length).to.eql(0);
+      expect(ctx._header_table.size).to.eql(0);
+    });
+
+    it('should change table size', function(){
+      var cmd = { type: 0, update: { type: 1, size: 512 } };
+      var buffer = ctx._encodeHeader(cmd);
+
+      expect(buffer.length).to.be(4);
+      expect(buffer[0]).to.be(0x80);
+      expect(buffer[1]).to.be(0x7f);
+      expect(buffer[2]).to.be(0x81);
+      expect(buffer[3]).to.be(0x03);
       expect(ctx._header_table.length).to.eql(0);
       expect(ctx._header_table.size).to.eql(0);
 
@@ -101,7 +122,7 @@ describe('HPACK', function(){
     var ctx;
 
     beforeEach(function(){
-      ctx = hpack.createRequestContext({ huffman: false });
+      ctx = hpack.createContext({ huffman: false });
     });
 
     context('Literal Header without Indexing', function(){
@@ -203,7 +224,7 @@ describe('HPACK', function(){
 
   context('Header Processsing', function(){
     context('Request examples compression', function(){
-      var ctx = hpack.createRequestContext({ huffman: false });
+      var ctx = hpack.createContext({ huffman: false });
 
       it('should encode first header', function(){
         var headers = [
@@ -269,7 +290,7 @@ describe('HPACK', function(){
     });
 
     context('Request examples decompression', function(){
-      var ctx = hpack.createRequestContext({ huffman: false });
+      var ctx = hpack.createContext({ huffman: false });
 
       it('should decode first header', function(){
         var headers = [
@@ -335,7 +356,7 @@ describe('HPACK', function(){
     });
 
     context('Request examples with Huffman compression', function(){
-      var ctx = hpack.createRequestContext();
+      var ctx = hpack.createContext();
 
       it('should encode first header', function(){
         var headers = [
@@ -399,7 +420,7 @@ describe('HPACK', function(){
     });
 
     context('Request examples with Huffman decompression', function(){
-      var ctx = hpack.createRequestContext();
+      var ctx = hpack.createContext();
 
       it('should decode first header', function(){
         var headers = [
@@ -463,7 +484,7 @@ describe('HPACK', function(){
     });
 
     context('Response examples compression', function(){
-      var ctx = hpack.createResponseContext({ huffman: false, size: 256 });
+      var ctx = hpack.createContext({ huffman: false, size: 256 });
 
       it('should encode first header', function(){
         var headers = [
@@ -543,7 +564,7 @@ describe('HPACK', function(){
     });
 
     context('Response examples decompression', function(){
-      var ctx = hpack.createResponseContext({ huffman: false, size: 256 });
+      var ctx = hpack.createContext({ huffman: false, size: 256 });
 
       it('should decode first header', function(){
         var headers = [
@@ -623,7 +644,7 @@ describe('HPACK', function(){
     });
 
     context('Response examples with Huffman compression', function(){
-      var ctx = hpack.createResponseContext({ size: 256 });
+      var ctx = hpack.createContext({ size: 256 });
 
       it('should encode first header', function(){
         var headers = [
@@ -700,7 +721,7 @@ describe('HPACK', function(){
     });
 
     context('Response examples with Huffman decompression', function(){
-      var ctx = hpack.createResponseContext({ size: 256 });
+      var ctx = hpack.createContext({ size: 256 });
 
       it('should decode first header', function(){
         var headers = [
@@ -780,7 +801,7 @@ describe('HPACK', function(){
   context('Header Table Management', function(){
     it('should clear all entries when process large header value', function(){
       var size = 255;
-      var ctx = hpack.createRequestContext({ size: size });
+      var ctx = hpack.createContext({ size: size });
 
       var first_header = [
         [ ':method', 'GET' ],
@@ -808,8 +829,8 @@ describe('HPACK', function(){
     });
 
     it('should emit evicted entry while encoding', function(){
-      var ctx1 = hpack.createRequestContext({ huffman: false });
-      var ctx2 = hpack.createRequestContext({ huffman: false });
+      var ctx1 = hpack.createContext({ huffman: false });
+      var ctx2 = hpack.createContext({ huffman: false });
 
       var large_value = '';
       for(i = 0; i < 4096 - 32 - 1; ++i) {
@@ -830,7 +851,7 @@ describe('HPACK', function(){
   });
 
   context('Error Handling', function(){
-    var ctx = hpack.createRequestContext();
+    var ctx = hpack.createContext();
 
     it('should handle invalid indexed name', function(){
       var encoded_headers = new Buffer([

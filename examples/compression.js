@@ -1,7 +1,7 @@
 var hpack = require('../lib/hpack');
 
-var ctx1 = hpack.createRequestContext({ huffman: false });
-var ctx2 = hpack.createRequestContext({ huffman: false });
+var ctx1 = hpack.createContext({ huffman: false });
+var ctx2 = hpack.createContext({ huffman: false });
 
 var buffer;
 var headers = [
