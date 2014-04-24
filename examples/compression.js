@@ -14,14 +14,14 @@ var headers = [
   [
     [ ':method', 'GET' ],
     [ ':scheme', 'http' ],
-    [ ':path', '/' ],
+    [ ':path', '/info.html' ],
     [ ':authority', 'www.example.com' ],
     [ 'cache-control', 'no-cache' ]
   ],
   [
     [ ':method', 'GET' ],
     [ ':scheme', 'https' ],
-    [ ':path', '/index.html' ],
+    [ ':path', '/info.html' ],
     [ ':authority', 'www.example.com' ],
     [ 'custom-key', 'custom-value' ]
   ]
